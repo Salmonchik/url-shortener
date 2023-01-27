@@ -1,0 +1,44 @@
+{% if page_obj %}
+  <table>
+    <thead>
+      <tr>
+        <td>Token</td>
+        <td>URL</td>
+        <td>Clicks</td>
+        <td>Created at</td>
+      </tr>
+    </thead>
+    <tbody>
+    {% for link in page_obj %}
+      <tr>
+        <td><a href="{% url 'redirect' link.token %}"> {{ link.token }} </a></td>
+        <td><a href="{{ link.url }}"> {{ link.url }}</a></td>
+        <td>{{ link.clicks_count }}</td>
+        <td>{{ link.created_at }}</td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+
+<div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">next</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+
+{% else %}
+  <h1>No short URLs exist yet.</h1>
+  <p>Zero URLs have been shortened as of now.</p>
+{% endif %}
