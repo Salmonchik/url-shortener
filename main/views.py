@@ -51,6 +51,5 @@ def stats(request):
     page_number = request.GET.get('page', 1)
     page_obj = paginator.get_page(page_number)
     return render(request, 'main/stats.html', {
-        'page': int(page_number),
         'page_obj': page_obj,
     })
